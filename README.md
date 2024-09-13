@@ -44,3 +44,4 @@ Setup:
 
 ## Modification
 You can change the system prompts in `llm_config.yaml`.
+Also, if you want to make the program faster (for example, if you have lots of resumes to parse), increase the value of the variable `N_THREADS` on `main.py`.

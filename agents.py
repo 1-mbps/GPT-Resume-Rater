@@ -1,7 +1,7 @@
 import os
 from autogen import AssistantAgent
 from autogen.agentchat.agent import Agent
-from pydantic.main import ModelMetaclass
+from pydantic._internal._model_construction import ModelMetaclass
 from typing import Any, Callable, Dict, List, Union
 import yaml
 from openai import OpenAI
@@ -47,6 +47,7 @@ class ResumeRater(AssistantAgent):
             self.rating_schema = schema
             self.use_pydantic_schema = True
         else:
+            print(type(schema))
             raise Exception("Schema is not a Pydantic BaseModel or a valid JSON object.")
         super().__init__(
             name="resume_rater",
