@@ -1,1 +1,5 @@
 .env
+job_description.txt
+schema.py
+resumes/*
+*.xlsx
