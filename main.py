@@ -1,6 +1,8 @@
 import argparse
 from autogen import UserProxyAgent
 import json
+from pydantic.main import ModelMetaclass
+from pydantic import BaseModel
 import sys
 import os
 
@@ -49,7 +51,7 @@ def main():
             from schema import Ratings
             resume_rater = ResumeRater(schema=Ratings)
         except Exception as e:
-            print("Error: Ratings class not found")
+            print(f"Error: {e}")
             sys.exit(1)
 
     if not isinstance(resume_rater, ResumeRater):
@@ -72,10 +74,13 @@ def main():
             chat_result = user.initiate_chat(resume_rater, message=resume_text, max_turns=1, silent=True, clear_history=True)
             try:
                 ratings_str = chat_result.chat_history[-1]["content"]
-                ratings_dict = json.loads(ratings_str)
+                if isinstance(ratings_str, BaseModel):
+                    ratings_dict = ratings_str.model_dump()
+                else:
+                    ratings_dict = json.loads(ratings_str)
                 ratings_list.append(ratings_dict)
             except Exception as e:
-                print("Failed to parse ratings.")
+                print(f"Failed to parse ratings - {e}")
         else:
             print("Failed to process resume.")
 

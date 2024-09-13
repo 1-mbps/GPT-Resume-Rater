@@ -1,14 +1,18 @@
 import os
 from autogen import AssistantAgent
-from pydantic import BaseModel
-from typing import Union
+from autogen.agentchat.agent import Agent
+from pydantic.main import ModelMetaclass
+from typing import Any, Callable, Dict, List, Union
 import yaml
+from openai import OpenAI
 
 from dotenv import load_dotenv
 load_dotenv()
 
 with open("llm_config.yaml", "r") as file:
     model_config = yaml.safe_load(file)
+
+client = OpenAI()
 
 class SchemaMakerAgent(AssistantAgent):
     def __init__(self):
@@ -23,7 +27,10 @@ class SchemaMakerAgent(AssistantAgent):
         )
 
 class ResumeRater(AssistantAgent):
-    def __init__(self, schema: Union[BaseModel, dict]):
+    def __init__(self, schema: Union[ModelMetaclass, dict]):
+
+        self.use_pydantic_schema = False
+
         # OpenAI structured outputs API supports either or Pydantic BaseModel
         # or a JSON schema like the one below
         # https://platform.openai.com/docs/guides/structured-outputs
@@ -36,7 +43,10 @@ class ResumeRater(AssistantAgent):
                     "schema": schema
                 }
             }
-        elif not isinstance(schema, BaseModel):
+        elif isinstance(schema, ModelMetaclass):
+            self.rating_schema = schema
+            self.use_pydantic_schema = True
+        else:
             raise Exception("Schema is not a Pydantic BaseModel or a valid JSON object.")
         super().__init__(
             name="resume_rater",
@@ -47,6 +57,22 @@ class ResumeRater(AssistantAgent):
                 "response_format": schema
             }
         )
+
+    def generate_reply(self, messages: List[Dict[str, Any]] | None = None, sender: Agent | None = None, **kwargs: Any) -> str | Dict | None:
+        if self.use_pydantic_schema:
+            # print(f"MESSAGES: {messages}")
+            message = messages[-1].get("content")
+            # print(f"MESSAGE: {message}")
+            completion = client.beta.chat.completions.parse(
+                model=self.llm_config["model"],
+                messages=[
+                    {"role": "system", "content": self.system_message},
+                    {"role": "user", "content": message}
+                ],
+                response_format=self.rating_schema,
+            )
+            return {"content": completion.choices[0].message.parsed, "role": "assistant"}
+        return super().generate_reply(messages, sender, **kwargs)
 
 
 # def get_llm_response(old_user_profile, query) -> dict:

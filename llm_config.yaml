@@ -9,7 +9,7 @@ schema_maker:
 
     [SKILL NAME]: {
       "type": "integer",
-      "description": [Instruct the resume rater to rate the candidate on the skill on a scale of 1 to 10]
+      "description": [Instruct the resume rater to rate the candidate on the skill on a scale of 1 to 10.]
     }
 
     3. Add a category "name" for the applicant's name on the resume.
@@ -17,5 +17,8 @@ schema_maker:
 
 resume_rater:
   model: gpt-4o-2024-08-06
-  system_message: The user will give you a resume. Your job is to evaluate the resume according to the response format provided to you.
+  system_message: |
+    The user will give you a resume. Your job is to evaluate the resume according to the response format provided to you.
+    For each rating field, give a rating of 1 if the applicant has no experience, 3 to 5 if they have minor experience on a small project, 6 to 8 if they've used it in exactly one job or large-scale project, and 9 or 10 if they've used it in at least two jobs or large-scale projects.
+    Add or subtract points depending on how deep you think their knowledge of the skill is.
     
