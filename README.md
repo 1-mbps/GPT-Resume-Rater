@@ -45,3 +45,6 @@ Setup:
 ## Modification
 You can change the system prompts in `llm_config.yaml`.
 Also, if you want to make the program faster (for example, if you have lots of resumes to parse), increase the value of the variable `N_THREADS` on `main.py`.
+
+## Warnings
+The model configuration file (`llm_config.yaml`) currently uses GPT-4o for all agents. If you decide to rate lots of resumes, this may burn some of your money.

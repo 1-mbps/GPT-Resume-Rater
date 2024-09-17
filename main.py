@@ -19,7 +19,6 @@ def process_chunk(chunk, resume_rater: ResumeRater):
     Function to process a chunk of the list of resumes.
     """
     for resume_path in chunk:
-        # This is a placeholder operation. Replace with your actual processing.
         resume_path = "resumes/"+resume_path
         if not os.path.exists(resume_path):
             print(f"Error: Resume file '{resume_path}' not found.")
