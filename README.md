@@ -43,7 +43,7 @@ Setup:
     Once the resume rating system is done (once you press "exit"), wait a while for the LLM to go over all resumes.
 
 Sample output:
-https://raw.githubusercontent.com/1-mbps/GPT-Resume-Rater/refs/heads/main/sample_output.png![image](https://github.com/user-attachments/assets/0d7a4373-b071-4386-af04-3d50b7781510)
+![image](https://github.com/user-attachments/assets/0d7a4373-b071-4386-af04-3d50b7781510)
 
 
 ## Modification
