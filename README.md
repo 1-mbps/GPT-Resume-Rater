@@ -42,7 +42,7 @@ Setup:
 
     Once the resume rating system is done (once you press "exit"), wait a while for the LLM to go over all resumes.
 
-Sample output:
+Sample output (note: `Total` column is normally not generated - I added this manually):
 ![image](https://github.com/user-attachments/assets/0d7a4373-b071-4386-af04-3d50b7781510)
 
 
