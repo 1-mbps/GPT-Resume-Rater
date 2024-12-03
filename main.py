@@ -20,6 +20,7 @@ def process_chunk(chunk, resume_rater: ResumeRater):
     """
     for resume_path in chunk:
         resume_path = "resumes/"+resume_path
+        print(f"Processing {resume_path}...")
         if not os.path.exists(resume_path):
             print(f"Error: Resume file '{resume_path}' not found.")
             continue
@@ -39,7 +40,7 @@ def process_chunk(chunk, resume_rater: ResumeRater):
             except Exception as e:
                 print(f"Failed to parse ratings - {e}")
         else:
-            print("Failed to process resume.")
+            print(f"Failed to process {resume_path}.")
 
 def main():
     parser = argparse.ArgumentParser(description="Process job description file.")

@@ -42,6 +42,9 @@ Setup:
 
     Once the resume rating system is done (once you press "exit"), wait a while for the LLM to go over all resumes.
 
+Sample output:
+![Output Excel file resume_ratings.xlsx]("https://github.com/1-mbps/GPT-Resume-Rater/blob/main/sample_output.png?raw=true")
+
 ## Modification
 You can change the system prompts in `llm_config.yaml`.
 Also, if you want to make the program faster (for example, if you have lots of resumes to parse), increase the value of the variable `N_THREADS` on `main.py`.
