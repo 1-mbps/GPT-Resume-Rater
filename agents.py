@@ -2,7 +2,7 @@ import os
 from autogen import AssistantAgent
 from autogen.agentchat.agent import Agent
 from pydantic._internal._model_construction import ModelMetaclass
-from typing import Any, Callable, Dict, List, Union
+from typing import Any, Dict, List, Union
 import yaml
 from openai import OpenAI
 
@@ -61,9 +61,7 @@ class ResumeRater(AssistantAgent):
 
     def generate_reply(self, messages: List[Dict[str, Any]] | None = None, sender: Agent | None = None, **kwargs: Any) -> str | Dict | None:
         if self.use_pydantic_schema:
-            # print(f"MESSAGES: {messages}")
             message = messages[-1].get("content")
-            # print(f"MESSAGE: {message}")
             completion = client.beta.chat.completions.parse(
                 model=self.llm_config["model"],
                 messages=[
@@ -74,19 +72,3 @@ class ResumeRater(AssistantAgent):
             )
             return {"content": completion.choices[0].message.parsed, "role": "assistant"}
         return super().generate_reply(messages, sender, **kwargs)
-
-
-# def get_llm_response(old_user_profile, query) -> dict:
-    
-    # query = user_message.format(old_user_profile=old_user_profile, query=query)
-    
-    # response = client.beta.chat.completions.parse(
-    #     model=MODEL,
-    #     messages=[
-    #         {"role": "system", "content": system_message},
-    #         {"role": "user", "content": query}
-    #     ],
-    #     response_format=Ratings,
-    # )
-
-    # return response.choices[0].message.parsed

@@ -13,7 +13,7 @@ schema_maker:
     }
 
     3. Add a category "name" for the applicant's name on the resume.
-    4. Make sure to add the categories required and additionalProperties. additionalProperties must always be false.
+    4. Make sure to add the fields required and additionalProperties. additionalProperties must always be false. Make sure that required includes every rating category.
 
 resume_rater:
   model: gpt-4o-2024-08-06
