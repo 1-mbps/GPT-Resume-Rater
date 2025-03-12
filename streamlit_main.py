@@ -62,7 +62,7 @@ if 'chat_active' in st.session_state and st.session_state['chat_active'] and "ra
     st.markdown(f"### Rating System\n{rating_schema_str}")
 
     # Display chat messages from history on app rerun
-    for message in st.session_state.messages:
+    for message in st.session_state.messages[3:]:
         with st.chat_message(message["role"]):
             if message["role"] != "system":
                 content = message['content']
@@ -92,7 +92,7 @@ if 'chat_active' in st.session_state and st.session_state['chat_active'] and "ra
             # Get response from agent
             schema_maker_response = st.session_state.schema_maker.respond(prompt)
 
-            print(f"RESPONSE: {schema_maker_response}")
+            # print(f"RESPONSE: {schema_maker_response}")
 
             # Save and display message
             if schema_maker_response.strip()[0] == '{':
