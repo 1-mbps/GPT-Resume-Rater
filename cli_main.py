@@ -7,40 +7,13 @@ import sys
 import os
 
 from agents import SchemaMakerAgent, ResumeRater
-from file_utils import convert_pdf_to_text, build_csv_string, csv_to_excel
+from file_utils import build_csv_string, csv_to_excel
+from processing import process_chunk
 
 user = UserProxyAgent(name="user", code_execution_config=False)
 
 N_THREADS = 8
 ratings_list = []
-
-def process_chunk(chunk, resume_rater: ResumeRater):
-    """
-    Function to process a chunk of the list of resumes.
-    """
-    for resume_path in chunk:
-        resume_path = "resumes/"+resume_path
-        print(f"Processing {resume_path}...")
-        if not os.path.exists(resume_path):
-            print(f"Error: Resume file '{resume_path}' not found.")
-            continue
-
-        resume_text = convert_pdf_to_text(resume_path)
-        if resume_text:
-            # silent - response does not show up in console
-            # clear history - clear past resumes from agent's memory
-            chat_result = user.initiate_chat(resume_rater, message=resume_text, max_turns=1, silent=True, clear_history=True)
-            try:
-                ratings_str = chat_result.chat_history[-1]["content"]
-                if isinstance(ratings_str, BaseModel):
-                    ratings_dict = ratings_str.model_dump()
-                else:
-                    ratings_dict = json.loads(ratings_str)
-                ratings_list.append(ratings_dict)
-            except Exception as e:
-                print(f"Failed to parse ratings - {e}")
-        else:
-            print(f"Failed to process {resume_path}.")
 
 def main():
     parser = argparse.ArgumentParser(description="Process job description file.")
@@ -100,7 +73,7 @@ def main():
         end_index = start_index + chunk_size if i < N_THREADS - 1 else None
         chunk = resume_list[start_index:end_index]
         
-        thread = threading.Thread(target=process_chunk, args=(chunk,resume_rater))
+        thread = threading.Thread(target=process_chunk, args=(chunk,resume_rater,user,ratings_list))
         thread.start()
         threads.append(thread)
     

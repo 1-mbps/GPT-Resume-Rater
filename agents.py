@@ -5,6 +5,7 @@ from pydantic._internal._model_construction import ModelMetaclass
 from typing import Any, Dict, List, Union
 import yaml
 from openai import OpenAI
+import streamlit as st
 
 from dotenv import load_dotenv
 load_dotenv()

@@ -1,5 +1,9 @@
+autogen==0.4.0
 openai
 openpyxl
-autogen==0.4.0
 pydantic
 PyPDF2
+openai
+pyyaml
+python-dotenv
+streamlit

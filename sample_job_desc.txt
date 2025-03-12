@@ -1,0 +1,48 @@
+Job Description: AI Engineer
+
+Position Overview:
+We are seeking a talented AI Engineer to join our cutting-edge technology team. The ideal candidate will design, develop, and deploy AI models and systems to solve complex business challenges. This role requires deep knowledge of machine learning algorithms, proficiency in software development, and experience working with cloud-based AI services.
+
+Key Responsibilities:
+
+Develop and deploy scalable machine learning models for production systems.
+
+Optimize AI models for performance, accuracy, and scalability.
+
+Collaborate with cross-functional teams to identify and implement AI-driven solutions.
+
+Stay updated on the latest trends and technologies in artificial intelligence and machine learning.
+
+Perform data preprocessing, feature engineering, and exploratory data analysis.
+
+Write efficient, maintainable code and create technical documentation.
+
+Required Skills and Qualifications:
+
+Bachelor’s or Master’s degree in Computer Science, Artificial Intelligence, Data Science, or related fields.
+
+3+ years of experience in AI/ML development.
+
+Proficiency in Python and familiarity with libraries such as TensorFlow, PyTorch, and scikit-learn.
+
+Strong understanding of supervised and unsupervised machine learning algorithms.
+
+Experience with cloud platforms such as AWS (SageMaker, Lambda) or Azure (Machine Learning Studio).
+
+Knowledge of data storage solutions (SQL, NoSQL, and data lakes).
+
+Familiarity with DevOps practices and tools (Docker, Kubernetes, CI/CD).
+
+Experience with natural language processing (NLP) or computer vision is a plus.
+
+Excellent problem-solving skills and ability to work in a team.
+
+Preferred Qualifications:
+
+PhD in AI or related fields.
+
+Publications or contributions to the AI/ML community.
+
+Hands-on experience with big data tools (Spark, Hadoop).
+
+Proficiency in Java or R is a plus.

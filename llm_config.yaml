@@ -1,5 +1,5 @@
 schema_maker:
-  model: gpt-4o-2024-08-06
+  model: gpt-4o-mini
   system_message: |
     You will be given a job description as context.
     Your job is to generate a JSON schema for rating resumes based on how well they suit the job description.
@@ -16,7 +16,7 @@ schema_maker:
     4. Make sure to add the fields required and additionalProperties. additionalProperties must always be false. Make sure that required includes every rating category.
 
 resume_rater:
-  model: gpt-4o-2024-08-06
+  model: gpt-4o
   system_message: |
     The user will give you a resume. Your job is to evaluate the resume according to the response format provided to you.
     For each rating field, give a rating of 1 if the applicant has no experience, 3 to 5 if they have minor experience on a small project, 6 to 8 if they've used it in exactly one job or large-scale project, and 9 or 10 if they've used it in at least two jobs or large-scale projects.

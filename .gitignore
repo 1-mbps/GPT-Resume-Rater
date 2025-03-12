@@ -5,3 +5,4 @@ resumes/*
 *.xlsx
 __pycache__
 .cache
+alt_desc.txt
