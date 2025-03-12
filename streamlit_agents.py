@@ -8,11 +8,13 @@ with open("llm_config.yaml", "r") as file:
     model_config = yaml.safe_load(file)
 
 class SchemaMakerAgent:
-    def __init__(self):
+    def __init__(self, messages: list):
         self.model = model_config["schema_maker"]["model"]
         self.system_message = model_config["schema_maker"]["system_message"]
         self.client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-        self.messages = [{"role": "system", "content": self.system_message}]
+        self.messages = messages
+        if not messages:
+            self.messages.append({"role": "system", "content": self.system_message})
 
     def respond(self, query: str) -> str:
         self.messages.append({"role": "user", "content": query})
@@ -21,7 +23,9 @@ class SchemaMakerAgent:
             model=self.model,
             response_format={"type": "json_object"}
         )
-        return completion.choices[0].message.content
+        response = completion.choices[0].message.content
+        self.messages.append({"role": "assistant", "content": response})
+        return response
     
 
 class ResumeRater:

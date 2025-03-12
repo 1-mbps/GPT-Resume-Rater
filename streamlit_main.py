@@ -14,11 +14,18 @@ dotenv.load_dotenv()
 st.title("GPT Resume Rater")
 st.session_state.N_THREADS = 8
 st.session_state.curr_agent = 0
-st.session_state.schema_maker = SchemaMakerAgent()
+
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+st.session_state.schema_maker = SchemaMakerAgent(messages=st.session_state.messages)
+
 st.session_state.ratings_list = []
 st.session_state.files = []
 st.session_state.RATINGS_FILE = "resume_ratings.xlsx"
 st.session_state.ratings_ready = False
+
 
 # Step 1: Upload Resumes
 uploaded_files = st.file_uploader("Upload resumes", accept_multiple_files=True, type="pdf")
@@ -54,14 +61,18 @@ if 'chat_active' in st.session_state and st.session_state['chat_active'] and "ra
     st.markdown("---")
     st.markdown(f"### Rating System\n{rating_schema_str}")
 
-    # Initialize chat history
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
     # Display chat messages from history on app rerun
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+            if message["role"] != "system":
+                content = message['content']
+                if content.strip()[0] == '{':
+                    json_dict = json.loads(content)
+                    response = format_properties(json_dict)
+                    st.session_state.rating_schema = json_dict
+                else:
+                    response = content
+                st.markdown(response)
         
     if prompt := st.chat_input("Give feedback on the rating system, or type 'done' to continue to resume rating."):
         
@@ -74,12 +85,14 @@ if 'chat_active' in st.session_state and st.session_state['chat_active'] and "ra
         # so let the user have a conversation with the AI to improve it
         else:
             # Save and display user message
-            st.session_state.messages.append({"role": "user", "content": prompt})
+            # st.session_state.messages.append({"role": "user", "content": prompt})
             with st.chat_message("user"):
                 st.markdown(prompt)
             
             # Get response from agent
             schema_maker_response = st.session_state.schema_maker.respond(prompt)
+
+            print(f"RESPONSE: {schema_maker_response}")
 
             # Save and display message
             if schema_maker_response.strip()[0] == '{':
@@ -89,7 +102,7 @@ if 'chat_active' in st.session_state and st.session_state['chat_active'] and "ra
             else:
                 response = schema_maker_response
 
-            st.session_state.messages.append({"role": "assistant", "content": response})
+            # st.session_state.messages.append({"role": "assistant", "content": response})
             with st.chat_message("ai"):
                 st.markdown(response)
     

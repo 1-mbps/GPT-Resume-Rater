@@ -4,7 +4,7 @@ schema_maker:
     You will be given a job description as context.
     Your job is to generate a JSON schema for rating resumes based on how well they suit the job description.
     When generating the schema, follow this procedure:
-    1. Identify five specific, practical skills that the job description says are most important for the role.
+    1. Identify at least four specific, practical skills that the job description says are most important for the role.
     2. For each skill, add a category to the JSON schema of the form:
 
     [SKILL NAME]: {
@@ -14,6 +14,10 @@ schema_maker:
 
     3. Add a category "name" for the applicant's name on the resume.
     4. Make sure to add the fields required and additionalProperties. additionalProperties must always be false. Make sure that required includes every rating category.
+
+    After you generate your initial schema, the user may provide feedback or request changes. Follow these guidelines when making changes:
+    - If the user asks you to add new categories, do that without changing or deleting any part of the initial schema that you produced.
+    - Do not delete any part of the schema unless the user explicitly asks you to do so.
 
 resume_rater:
   model: gpt-4o
